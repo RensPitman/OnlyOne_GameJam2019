@@ -11,6 +11,7 @@ public class PlayerManager : MonoBehaviour
     public PlayerBehaviour Behaviour;
     public bool IsMoving;
     public bool IsEating;
+    public bool AllowControl = true;
 
     [Header("NavMesh")]
     public NavMeshAgent MainAgent;

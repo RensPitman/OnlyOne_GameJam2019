@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FoodBehaviour : MonoBehaviour
 {
@@ -19,6 +20,9 @@ public class FoodBehaviour : MonoBehaviour
     public float BiteRate;
     private bool isEating;
     private int biteIndex;
+
+    public bool isInterface;
+    public bool Quit;
 
     private void Update()
     {
@@ -40,12 +44,24 @@ public class FoodBehaviour : MonoBehaviour
                     isEating = false;
                     GameManager.Player.IsEating = false;
 
-                    for (int i = 0; i < SpawnAmount; ++i)
+                    if (!isInterface)
                     {
-                        GameManager.Player.SpawnAgent();
+                        for (int i = 0; i < SpawnAmount; ++i)
+                        {
+                            GameManager.Player.SpawnAgent();
+
+                            Destroy(this.gameObject);
+                        }
+                    }
+                    else
+                    {
+                        if (Quit)
+                            Application.Quit();
+                        else
+                            StartCoroutine(WaitForScene());
                     }
 
-                    Destroy(this.gameObject);
+                    
                 }
             }
         }
@@ -55,6 +71,12 @@ public class FoodBehaviour : MonoBehaviour
             
             biteIndex = 0;
         }
+    }
+
+    IEnumerator WaitForScene()
+    {
+        yield return new WaitForSeconds(0.2f);
+        SceneManager.LoadScene(1);
     }
 
     IEnumerator WaitForBite()

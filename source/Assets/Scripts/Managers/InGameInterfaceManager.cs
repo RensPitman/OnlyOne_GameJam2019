@@ -12,10 +12,18 @@ public class InGameInterfaceManager : MonoBehaviour
     public Text TimerText;
     public Image FillCirlce;
 
+    [Header("Instructions")]
+    public CanvasGroup canvas;
+
     private void Update()
     {
         UpdateCounter();
         UpdateTimer();
+    }
+
+    public void Hideinstructions()
+    {
+        canvas.alpha = 0;
     }
 
     void UpdateCounter()

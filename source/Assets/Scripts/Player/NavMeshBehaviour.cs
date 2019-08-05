@@ -16,11 +16,12 @@ public class NavMeshBehaviour : MonoBehaviour
     public Animator MyAnim;
 
     [Header("Lost pidgeon")]
+    public bool isLost;
     public float Radius;
 
     private void Start()
     {
-        if(!isMain && GameManager.Player.MainAgent != null)
+        if(!isMain && GameManager.Player.MainAgent != null && !isLost)
             MyTarget = GameManager.Player.MainAgent.gameObject;
 
         if (isMain)

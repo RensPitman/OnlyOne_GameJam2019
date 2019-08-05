@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameplayManager : MonoBehaviour
 {
@@ -20,9 +21,18 @@ public class GameplayManager : MonoBehaviour
     private void Start()
     {
         currentTime = MaxTime;
-        timerIsOn = true;
+
+        GameManager.Player.AllowControl = false;
+        StartCoroutine(ShowInstructions());
     }
 
+    IEnumerator ShowInstructions()
+    {
+        yield return new WaitForSeconds(3);
+        timerIsOn = true;
+        GameManager.UI.Hideinstructions();
+        GameManager.Player.AllowControl = true;
+    }
 
     public void UpdateLevelTimer(float totalSeconds)
     {
@@ -50,6 +60,12 @@ public class GameplayManager : MonoBehaviour
 
     }
 
+    void EndGame()
+    {
+        SceneManager.LoadScene(2);
+        PlayerPrefs.SetInt("BirdCount", GameManager.Player.AllAgents.Count);
+    }
+
     void Timer()
     {
         if (currentTime >= 0)
@@ -63,7 +79,7 @@ public class GameplayManager : MonoBehaviour
             currentTime = 0;
             Minutes = 0;
             Seconds = 0;
-            print("DONE");
+            EndGame();
         }
     }
 }

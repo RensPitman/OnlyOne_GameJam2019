@@ -15,16 +15,13 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (GameManager.Player.AllowControl)
         {
-            GameManager.Player.SpawnIndicator(GetMousePos());
-            GameManager.Player.SetAgentDestination(GetMousePos());
-        }
-
-        // TESTING
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            GameManager.Player.SpawnAgent();
+            if (Input.GetMouseButtonDown(0))
+            {
+                GameManager.Player.SpawnIndicator(GetMousePos());
+                GameManager.Player.SetAgentDestination(GetMousePos());
+            }
         }
     }
 
